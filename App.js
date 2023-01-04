@@ -25,7 +25,13 @@ function Overview() {
         },
         headerTintColor: '#bcbcbc',
         tabBarStyle: {
-          backgroundColor: '#000',
+          position: 'absolute',
+          backgroundColor: 'rgba(0, 0, 0, 0.85)',
+          padding: 4,
+          borderTopRightRadius: 20,
+          borderTopLeftRadius: 20,
+          borderTopColor: "transparent",
+          elevation: 0,
         },
         tabBarActiveTintColor: '#D64242',
       }}
