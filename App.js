@@ -1,9 +1,12 @@
-// import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+// import { LinearGradient } from 'expo-linear-gradient';
+
+import { Provider as PaperProvider } from 'react-native-paper';
 
 import HomeScreen from './screens/HomeScreen';
+import SearchScreen from './screens/SearchScreen';
 import TrendingScreen from './screens/TrendingScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 import MovieDetailsScreen from './screens/MovieDetailsScreen';
@@ -11,6 +14,9 @@ import MovieDetailsScreen from './screens/MovieDetailsScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import { FadeIn } from 'react-native-reanimated';
+import QueryDetailsScreen from './screens/QueryDetailsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,6 +63,16 @@ function Overview() {
         }}
       />
       <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{
+          tabBarLabel: 'Search',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" size={size} color={color} />
+          )
+        }}
+      />
+      <Tab.Screen
         name="Favorites"
         component={FavoritesScreen}
         options={{
@@ -71,20 +87,27 @@ function Overview() {
 }
 
 export default function App() {
-
-
   return (
-    <NavigationContainer>
-      <StatusBar style='light' />
-      <Stack.Navigator initialRouteName='Overview'>
-        <Stack.Screen
-          name="Overview"
-          component={Overview}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <StatusBar style='light' />
+        <Stack.Navigator initialRouteName='Overview'>
+          <Stack.Screen
+            name="Overview"
+            component={Overview}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="MovieDetails"
+            component={MovieDetailsScreen}
+          />
+          <Stack.Screen
+            name="QueryDetails"
+            component={QueryDetailsScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 

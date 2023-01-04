@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
-import { Dimensions, View, Text } from "react-native";
-import GridTile from "../components/GridTile";
-import Carousel from 'react-native-reanimated-carousel';
+import { useLayoutEffect, useState } from "react";
+import { Dimensions, ScrollView, FlatList } from "react-native";
+import { Divider, Text } from 'react-native-paper';
+import HomeGridTile from "../../components/HomeGridTile";
+
+import { FadeInRight } from 'react-native-reanimated';
 
 export default function HomeScreen({ navigation }) {
   const [topRated, setTopRated] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
-  const width = Dimensions.get('window').width;
 
-  useEffect(() => {
+  const width = Dimensions.get('window').width;
+  const height = Dimensions.get('window').height;
+  const viewCount = 5;
+
+  useLayoutEffect(() => {
     async function loadTopRated() {
       try {
         const response = await fetch(
@@ -42,7 +47,7 @@ export default function HomeScreen({ navigation }) {
 
   }, [])
 
-  function renderMovies({ item }) {
+  function renderMovies({ item, index }) {
     function pressHandler() {
       navigation.navigate('MovieDetails', {
         id: item.id,
@@ -50,54 +55,33 @@ export default function HomeScreen({ navigation }) {
     }
 
     return (
-      <GridTile
+      <HomeGridTile
         poster={item.poster_path}
         title={item.title || item.name}
         onPress={pressHandler}
+        entering={FadeInRight.delay(
+          (viewCount - index) * 100
+        ).duration(200)}
       />
     );
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text>Top Rated Movies</Text>
-      <Carousel
-        loop
-        width={width}
-        height={width / 2}
-        autoPlay={false}
+    <ScrollView style={{ flex: 1 }}>
+      <Text variant="titleLarge">Top Rated Movies</Text>
+      <FlatList
+        horizontal
         data={topRated}
-        scrollAnimationDuration={1000}
-        onSnapToItem={(index) => console.log('current index:', index)}
         renderItem={renderMovies}
-      // renderItem={({ index, item }) => (
-      //   <View
-      //     style={{
-      //       flex: 1,
-      //       borderWidth: 1,
-      //       justifyContent: 'center',
-      //       width: '80%',
-      //       marginRight: 'auto',
-      //       marginLeft: 'auto',
-      //     }}
-      //   >
-      //     <Text style={{ textAlign: 'center', fontSize: 30 }}>
-      //       {item.title}
-      //     </Text>
-      //   </View>
-      // )}
+        keyExtractor={(item) => item.id}
       />
-      <Text>Upcoming Soon in Theatres</Text>
-      <Carousel
-        loop
-        width={width}
-        height={width / 2}
-        autoPlay={false}
+      <Text variant="titleLarge">Upcoming Soon in Theatres</Text>
+      <FlatList
+        horizontal
         data={upcoming}
-        scrollAnimationDuration={1000}
-        onSnapToItem={(index) => console.log('current index:', index)}
         renderItem={renderMovies}
+        keyExtractor={(item) => item.id}
       />
-    </View>
+    </ScrollView>
   );
 }

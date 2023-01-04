@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native"
 import { Ionicons } from '@expo/vector-icons';
 
@@ -11,7 +11,7 @@ export default function MovieDetailsScreen({ route }) {
   const endPoint = `https://api.themoviedb.org/3/movie/${id}?${api_key}&language=en-US`
   const imagePath = `https://image.tmdb.org/t/p/w342/${movieData.poster_path}`;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsLoading(true);
     async function loadMovieDetails() {
       try {

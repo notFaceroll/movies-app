@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FlatList } from "react-native";
-import GridTile from "../components/GridTile";
+import GridTile from "../../components/GridTile";
 
 export default function TrendingScreen({ navigation }) {
   const [trending, setTrending] = useState([]);
