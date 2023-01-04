@@ -1,20 +1,89 @@
+// import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+
+import HomeScreen from './screens/HomeScreen';
+import TrendingScreen from './screens/TrendingScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
+import MovieDetailsScreen from './screens/MovieDetailsScreen';
+
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+
+function Overview() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#000',
+        },
+        headerTintColor: '#bcbcbc',
+        tabBarStyle: {
+          backgroundColor: '#000',
+        },
+        tabBarActiveTintColor: '#D64242',
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Trending"
+        component={TrendingScreen}
+        options={{
+          tabBarLabel: 'Trending',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="flame" size={size} color={color} />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          tabBarLabel: 'Favorites',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="heart" size={size} color={color} />
+          )
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <StatusBar style='light' />
+      <Stack.Navigator initialRouteName='Overview'>
+        <Stack.Screen
+          name="Overview"
+          component={Overview}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="MovieDetails" component={MovieDetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  appContainer: {
+    marginTop: 24
+  }
+})
