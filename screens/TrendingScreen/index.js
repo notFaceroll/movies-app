@@ -47,7 +47,7 @@ export default function TrendingScreen({ navigation }) {
       data={trending}
       renderItem={renderTrendingMovie}
       keyExtractor={(item) => item.id}
-      numColumns={2}
+      // numColumns={2}
     />
   )
 }

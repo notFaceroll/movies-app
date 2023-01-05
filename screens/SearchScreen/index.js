@@ -20,6 +20,12 @@ export default function SearchScreen({ navigation }) {
   const onChangeSearch = query => setSearchQuery(query);
   const width = Dimensions.get('screen').width;
 
+  function handleSubmitSearch() {
+    navigation.navigate('QueryDetails', {
+      query: searchQuery,
+    })
+  }
+
   function renderQuery({ item }) {
     function pressHandler() {
       navigation.navigate('QueryDetails', {
@@ -53,6 +59,8 @@ export default function SearchScreen({ navigation }) {
         onChangeText={onChangeSearch}
         value={searchQuery}
         style={styles.input}
+        onIconPress={handleSubmitSearch}
+        onSubmitEditing={handleSubmitSearch}
       />
       <FlatList
         style={{
