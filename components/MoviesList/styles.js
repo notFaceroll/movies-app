@@ -2,16 +2,14 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   list: {
-    marginBottom: 8,
+    marginBottom: 16,
+    paddingBottom: 16
   },
-  topList: {
-    paddingVertical: 25,
-  },
-  upcomingList: {
-    paddingVertical: 25,
-  },
+
   sectionTitle: {
-    color: '#fff',
+    color: '#eeeeee',
     marginHorizontal: 8,
+    fontSize: 24,
+    marginBottom: 8,
   }
 })

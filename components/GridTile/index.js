@@ -1,19 +1,20 @@
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, View, Text } from "react-native";
 import { styles } from "./styles";
-import { Card } from "react-native-paper";
 
 export default function GridTile({ title, onPress, poster }) {
   const imagePath = `https://image.tmdb.org/t/p/w342/${poster}`
   return (
-    <Card style={styles.gridItem}>
+    <View style={styles.gridItem}>
       <Pressable style={styles.button} onPress={onPress}>
-        <Card.Cover source={{ uri: imagePath }} />
-        <Card.Title title={title} />
-        {/* <View style={styles.innerContainer}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{ uri: imagePath }} />
+        </View>
+{/* 
+        <View style={styles.content}>
           <Text style={styles.title}>{title}</Text>
         </View> */}
       </Pressable>
-    </Card>
+    </View>
   )
 }
 

@@ -6,9 +6,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
   },
-  input: {
-    backgroundColor: '#eeeeee',
-    color: 'red',
+  inputContainer: {
     margin: 8,
+  },
+  input: {
+    backgroundColor: '#fff',
+    color: 'black',
   }
+
 })

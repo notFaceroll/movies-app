@@ -2,28 +2,39 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   gridItem: {
+    margin: 12,
     flex: 1 / 2,
-    margin: 16,
+    height: 300,
+    borderRadius: 4,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#cccccc',
+    elevation: 4,
   },
+
   button: {
     flex: 1,
   },
-  innerContainer: {
-    height: '20%',
-    paddingTop: 4,
-    paddingLeft: 8,
-    justifyContent: 'flex-start',
-    alignItems: "flex-start",
-  },
+
   title: {
     fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 16,
+    color: '#cccccc'
   },
+
   imageContainer: {
+    flex: 2,
+  },
+
+  image: {
     flex: 1,
   },
-  image: {
-    width: '100%',
-    height: '100%',
+
+  content: {
+    // flex: 1,
+    height: '20%',
+    backgroundColor: '#131313',
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })

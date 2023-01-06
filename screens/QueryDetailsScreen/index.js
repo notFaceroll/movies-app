@@ -2,6 +2,7 @@ import { useLayoutEffect, useState, useEffect } from 'react';
 import GridTile from '../../components/GridTile';
 import { FlatList, View, Text } from 'react-native'
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import Gradient from '../../components/Gradient';
 
 function delay(ms = 1000) {
   console.log('delay')
@@ -9,7 +10,7 @@ function delay(ms = 1000) {
 }
 
 export default function QueryDetailsScreen({ navigation, route }) {
-  const { id, query } = route.params;
+  const { id, query, name } = route.params;
   const [queryResult, setQueryResult] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,7 +52,10 @@ export default function QueryDetailsScreen({ navigation, route }) {
   }
 
   return (
-    <>
+    <Gradient>
+      <View style={{ paddingVertical: 8 }}>
+        <Text style={{ color: '#eeeeee', textAlign: 'center', fontSize: 18 }}>Showing results for: {query || name}</Text>
+      </View>
       {(queryResult.length > 0 && !isLoading) && (
         <FlatList
           data={queryResult}
@@ -61,8 +65,8 @@ export default function QueryDetailsScreen({ navigation, route }) {
         />
       )}
       {(queryResult.length === 0 && !isLoading) && (
-        <View>
-          <Text>Looks like we can't find what you're looking for :&#40;</Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+          <Text style={{ color: '#eeeeee', fontSize: 24, textAlign: 'center' }}>Looks like we couldn't find what you're looking for :&#40;</Text>
         </View>
       )}
       {isLoading && (
@@ -70,6 +74,6 @@ export default function QueryDetailsScreen({ navigation, route }) {
           <ActivityIndicator animating={true} size="large" color={MD2Colors.red800} />
         </View>
       )}
-    </>
+    </Gradient>
   )
 }

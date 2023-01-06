@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View, Text, FlatList, Dimensions, Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Searchbar } from 'react-native-paper';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { styles } from './styles';
 
 export default function SearchScreen({ navigation }) {
@@ -30,35 +32,38 @@ export default function SearchScreen({ navigation }) {
     function pressHandler() {
       navigation.navigate('QueryDetails', {
         id: item.id,
+        name: item.name,
       });
     }
 
     return (
-      <View
+      <Animated.View
+        entering={FadeInDown}
         style={{
           flex: 1 / 2,
           borderRadius: 8,
           height: width / 4,
-          backgroundColor: 'salmon',
+          backgroundColor: '#BFA5A3',
           margin: 8,
         }}>
         <Pressable style={{
           flex: 1, alignItems: 'center',
           justifyContent: 'center',
         }} onPress={pressHandler}>
-          <Text style={{ color: 'white' }}>{item.name}</Text>
+          <Text style={{ color: '#000', fontSize: 18 }}>{item.name}</Text>
         </Pressable>
-      </View>
+      </Animated.View>
     );
   }
 
   return (
     <View style={styles.container}>
       <Searchbar
-        placeholder='Search movies, actors, studios...'
+        placeholder='Search your movies here!'
         onChangeText={onChangeSearch}
         value={searchQuery}
-        style={styles.input}
+        style={styles.inputContainer}
+        inputStyle={styles.input}
         onIconPress={handleSubmitSearch}
         onSubmitEditing={handleSubmitSearch}
       />
@@ -69,21 +74,6 @@ export default function SearchScreen({ navigation }) {
         data={genres}
         numColumns={2}
         keyExtractor={(item) => item.id}
-        // renderItem={({ item }) => (
-        //   <View
-        //     style={{
-        //       flex: 1 / 2,
-        //       borderRadius: 8,
-        //       alignItems: 'center',
-        //       justifyContent: 'center',
-        //       // width: width / 2.3,
-        //       height: width / 2.3,
-        //       margin: 4,
-        //       backgroundColor: 'salmon'
-        //     }}>
-        //     <Text style={{ color: 'white' }}>{item.name}</Text>
-        //   </View>
-        // )}
         renderItem={renderQuery}
       />
     </View>

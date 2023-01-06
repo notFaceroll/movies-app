@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FlatList } from "react-native";
+import Gradient from '../../components/Gradient';
 import GridTile from "../../components/GridTile";
 
 export default function TrendingScreen({ navigation }) {
@@ -12,7 +13,7 @@ export default function TrendingScreen({ navigation }) {
       try {
         const response = await fetch(
           'https://api.themoviedb.org/3/movie/popular?api_key=4c00770e06a5046da486fdd9a5b221d8&language=en-US&page=1'
-          );
+        );
         const data = await response.json();
         setTrending(data.results);
 
@@ -43,11 +44,13 @@ export default function TrendingScreen({ navigation }) {
   }
 
   return (
-    <FlatList
-      data={trending}
-      renderItem={renderTrendingMovie}
-      keyExtractor={(item) => item.id}
-      // numColumns={2}
-    />
+    <Gradient>
+      <FlatList
+        data={trending}
+        renderItem={renderTrendingMovie}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+      />
+    </Gradient>
   )
 }
