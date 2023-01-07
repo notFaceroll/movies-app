@@ -2,6 +2,8 @@
   "expo": {
     "name": "MyMovies",
     "slug": "MyMovies",
+    "privacy": "unlisted",
+    "description": "App to search and favorite movies",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -41,7 +41,8 @@ export default function MovieDetailsScreen({ route }) {
     Toast.show({
       type: 'success',
       text1: '✅ Added to favorites',
-      position: 'bottom'
+      position: 'bottom',
+      visibilityTime: 2000,
     })
   }
 
@@ -50,7 +51,8 @@ export default function MovieDetailsScreen({ route }) {
     Toast.show({
       type: 'error',
       text1: '❌ Removed from favorites',
-      position: 'bottom'
+      position: 'bottom',
+      visibilityTime: 2000,
     })
   }
 

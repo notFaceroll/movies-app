@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { Text } from 'react-native-paper'
 import { FlatList } from "react-native-gesture-handler";
 import Gradient from "../../components/Gradient";
 import { FavoritesContext } from "../../store/favorites-context";
@@ -34,7 +35,21 @@ export default function FavoritesScreen({ navigation }) {
           numColumns={2}
         />
       ) : (
-        <Text>You don't have any favorites, go add some movies!</Text>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <Text
+            variant="headlineLarge"
+            style={{ color: '#ccc', textAlign: 'center' }}
+          >
+            You don't have any favorites yet.
+          </Text>
+          <Text
+            variant="headlineMedium"
+            style={{ color: '#ccc', textAlign: 'center' }}
+
+          >
+            Go look for some movies!
+          </Text>
+        </View>
       )}
     </Gradient>
   );
