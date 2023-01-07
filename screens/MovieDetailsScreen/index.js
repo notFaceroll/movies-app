@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useState } from "react";
-import { View, Text, Pressable, ScrollView, Dimensions } from "react-native"
+import { View, Text, Pressable, ScrollView } from "react-native"
 import { FavoritesContext } from "../../store/favorites-context";
 import { ActivityIndicator, Card, MD2Colors } from 'react-native-paper';
 
@@ -7,44 +7,51 @@ import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from "expo-linear-gradient";
 import { styles } from "./styles";
 
+import Toast from 'react-native-toast-message';
+import MoviesService from "../../services/MoviesService";
+
 export default function MovieDetailsScreen({ route }) {
   const [movieData, setMovieData] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   const { id } = route.params;
-
   const { favorites, removeMovieFromFavorites, addMovieToFavorites } = useContext(FavoritesContext);
 
   const isMovieStored = favorites?.find((movie) => movie.id === movieData.id);
-
-  const api_key = 'api_key=4c00770e06a5046da486fdd9a5b221d8';
-  const endPoint = `https://api.themoviedb.org/3/movie/${id}?${api_key}&language=en-US`
   const imagePath = `https://image.tmdb.org/t/p/w342/${movieData.poster_path}`;
 
   useLayoutEffect(() => {
     setIsLoading(true);
     async function loadMovieDetails() {
       try {
-        const response = await fetch(endPoint);
-        const data = await response.json();
-        setMovieData(data);
+        const movieFound = await MoviesService.getById(id);
+        setMovieData(movieFound);
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
         setIsLoading(false);
         setHasError(true);
-      } 
+      }
     }
     loadMovieDetails();
   }, [])
 
   function handleAddToFavorites() {
     addMovieToFavorites(movieData);
+    Toast.show({
+      type: 'success',
+      text1: '✅ Added to favorites',
+      position: 'bottom'
+    })
   }
 
   function handleRemoveFromFavorites() {
     removeMovieFromFavorites(id);
+    Toast.show({
+      type: 'error',
+      text1: '❌ Removed from favorites',
+      position: 'bottom'
+    })
   }
 
   if (hasError) {
@@ -55,6 +62,7 @@ export default function MovieDetailsScreen({ route }) {
       >
         <Text style={{ fontSize: 32, color: '#eeeeee' }}>Something went wrong :&#40;</Text>
         <Text style={{ fontSize: 18, color: '#eeeeee' }}>Check your internet connection and try again!</Text>
+        <Ionicons name="wifi-outline" size={46} color="#eee" />
       </LinearGradient>
     )
   }
@@ -79,6 +87,7 @@ export default function MovieDetailsScreen({ route }) {
         <Card mode="outlined" style={styles.imageContainer}>
           <Card.Cover source={{ uri: imagePath }} style={styles.image} />
         </Card>
+
         <View style={styles.ratingContainer}>
           <Ionicons
             name="star"
@@ -92,39 +101,23 @@ export default function MovieDetailsScreen({ route }) {
           <Text style={styles.ratingCount}>
             &#40;{movieData?.vote_count} reviews&#41;
           </Text>
-
-          {/* {isMovieStored && (
-            <Pressable
-              onPress={handleRemoveFromFavorites}
-              style={{ marginLeft: 'auto' }}
-            >
-              <Ionicons name="trash-bin" size={24} color="white" />
-            </Pressable>
-          )}
-
-          <Pressable
-            onPress={handleAddToFavorites}
-            style={{ marginLeft: 'auto' }}
-            disabled={!!isMovieStored}
-          >
-            <Ionicons name="heart" size={24} color="red" />
-          </Pressable> */}
-
           <Pressable
             onPress={isMovieStored ? handleRemoveFromFavorites : handleAddToFavorites}
             style={{ marginLeft: 'auto' }}
-            // disabled={!!isMovieStored}
           >
             <Ionicons name={isMovieStored ? "heart" : "heart-outline"} size={24} color="red" />
           </Pressable>
         </View>
+
         <View style={styles.textContainer}>
           <Text style={styles.title}>{movieData?.title}</Text>
           <Text style={{ color: '#cccc' }}>{movieData?.release_date}</Text>
         </View>
+
         <ScrollView>
           <Text style={styles.overview}>{movieData?.overview}</Text>
         </ScrollView>
+
       </View>
     </LinearGradient>
   );

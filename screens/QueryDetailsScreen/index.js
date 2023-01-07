@@ -1,13 +1,10 @@
-import { useLayoutEffect, useState, useEffect } from 'react';
-import GridTile from '../../components/GridTile';
+import { useLayoutEffect, useState } from 'react';
+import MoviesService from '../../services/MoviesService';
+
 import { FlatList, View, Text } from 'react-native'
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import Gradient from '../../components/Gradient';
-
-function delay(ms = 1000) {
-  console.log('delay')
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import GridTile from '../../components/GridTile';
 
 export default function QueryDetailsScreen({ navigation, route }) {
   const { id, query, name } = route.params;
@@ -19,13 +16,11 @@ export default function QueryDetailsScreen({ navigation, route }) {
     try {
       async function loadQuery() {
         if (id) {
-          const data = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=4c00770e06a5046da486fdd9a5b221d8&language=en-US&with_genres=${id}`);
-          const json = await data.json();
-          setQueryResult(json.results);
+          const moviesToRender = await MoviesService.discover(id);
+          setQueryResult(moviesToRender);
         } else {
-          const data = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=4c00770e06a5046da486fdd9a5b221d8&query=${query}`)
-          const json = await data.json();
-          setQueryResult(json.results);
+          const moviesToRender = await MoviesService.searchMovie(query);
+          setQueryResult(moviesToRender);
         }
         setIsLoading(false);
       }

@@ -14,13 +14,28 @@ export default function HomeScreen() {
         <MoviesList collection="Upcoming" section='Upcoming' />
         <MoviesList
           collection="BetweenDates"
-          section='Good old 2000s'
+          section='Gen 2000s'
           options={{ from: '2000-02-02', to: '2010-02-02' }}
         />
         <MoviesList
           collection="BetweenDates"
-          section='Back to 70s'
+          section='Back to 90s'
+          options={{ from: '1990-01-01', to: '2000-01-01' }}
+        />
+        <MoviesList
+          collection="BetweenDates"
+          section="Miss 80s? Let's get back then"
+          options={{ from: '1980-01-01', to: '1990-01-01' }}
+        />
+        <MoviesList
+          collection="BetweenDates"
+          section="Good ol' 70s"
           options={{ from: '1970-01-01', to: '1980-01-01' }}
+        />
+        <MoviesList
+          collection="BetweenDates"
+          section="There's some classic stuff in 60's!"
+          options={{ from: '1960-01-01', to: '1970-01-01' }}
         />
       </ScrollView>
 

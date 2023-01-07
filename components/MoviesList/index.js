@@ -74,9 +74,9 @@ export default function MoviesList({ collection, section, options }) {
         {section}
       </Text>
       {hasError && (
-        <View style={{ flex: 1, height: 400, }}>
+        <View style={{ flex: 1, height: 400, alignItems: 'center' }}>
           <Text style={{ fontSize: 32, color: '#eeeeee' }}>Something went wrong :&#40;</Text>
-          <Text style={{ fontSize: 18, color: '#eeeeee' }}>Check your internet connection and try again!</Text>
+          <Text style={{ fontSize: 18, color: '#eeeeee', marginBottom: 8, }}>Check your internet connection and try again!</Text>
           <Button title='Retry' onPress={loadMovies} />
         </View>
       )}
